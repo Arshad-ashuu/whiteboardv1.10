@@ -28,10 +28,25 @@ function App() {
 
 
   function handleTransform(e) {
-    if (action !== ACTIONS.SELECT) return
-    const target = e.currentTarget;
-    transformerRef.current.nodes([target])
+    if (action !== ACTIONS.SELECT) return;
+  
+    const target = e.target;
+  
+    // Check if the clicked target is a shape
+    if (
+      target.getClassName() !== "Rect" &&
+      target.getClassName() !== "Circle" &&
+      target.getClassName() !== "Arrow" &&
+      target.getClassName() !== "Line"
+    ) {
+      // Clear transformer nodes to deactivate it
+      transformerRef.current.nodes([]);
+      return;
+    }
+  
+    transformerRef.current.nodes([target]);
   }
+  
 
   function onPointerDown() {
     if (action === ACTIONS.SELECT) return;
